@@ -16,7 +16,6 @@
     <description><![CDATA[
         Export postman collection containing REST API
         requests for your Spring Boot application.<br>
-        <em>most HTML tags may be used</em>
     ]]></description>
 
     <!-- Product and plugin compatibility requirements.
@@ -26,15 +25,24 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-
+        <notificationGroup displayType="BALLOON" id="postman.collection.notification.group"/>
+        <lang.documentationProvider
+                language="HTML"
+                implementationClass="com.postman.collection.documentation.PostmanDocumentationProvider"
+        />
     </extensions>
 
     <actions>
-        <action id="postman.collection.exporter" class="com.postman.collection.actions.Exporter"
-                text="Postman Collection" icon="MyIcons.exportLogoBig">
-            <add-to-group group-id="ToolsMenu" anchor="last"/>
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
-        </action>
+        <group id="postman.collection.exporter.group"
+               text="Postman Collection">
+            <action id="postman.collection.exporter.action"
+                    class="com.postman.collection.actions.Exporter"
+                    text="Postman Collection"
+                    icon="AllIcons.ToolbarDecorator.Export">
+                <add-to-group group-id="ToolsMenu" anchor="last"/>
+                <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+                <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+            </action>
+        </group>
     </actions>
 </idea-plugin>

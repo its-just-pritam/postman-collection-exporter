@@ -12,7 +12,6 @@ build/
 *.iws
 *.iml
 *.ipr
-*.idea
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
@@ -41,3 +40,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+*.idea
