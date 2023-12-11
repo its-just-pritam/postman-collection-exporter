@@ -1,5 +1,6 @@
 package com.postman.collection.actions;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -27,13 +28,20 @@ public class Exporter extends AnAction implements DumbAware {
 
     void actionExecutor(AnActionEvent e) {
 
+        Project project = e.getProject();
+        if (project == null) {
+            Messages.showMessageDialog(e.getProject(),
+                    "Project not selected!", "Error", AllIcons.General.ErrorDialog);
+            return;
+        }
+
         Optional<BasicActionHandler> actionHandlerObject = CommonFactory.ACTION_FACTORY_MAP.entrySet().stream()
                 .filter(entry -> entry.getKey().test(e.getPlace()))
                 .findFirst()
                 .map(Map.Entry::getValue)
-                .map(func -> func.apply(e));
+                .map(func -> func.apply(project));
 
-        actionHandlerObject.ifPresent(basicActionHandler -> basicActionHandler.handleAction(e));
+        actionHandlerObject.ifPresent(basicActionHandler -> basicActionHandler.handleAction(project));
     }
 
 
