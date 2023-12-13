@@ -1,5 +1,6 @@
 package com.postman.collection.utils;
 
+import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
@@ -38,7 +39,7 @@ public class Utils {
             CompilationUnit cu = StaticJavaParser.parse(new File(filePath));
             cu.getTypes().forEach(type -> {
 
-                if(type.isAnnotationPresent("RestController")) {
+                if(type.isAnnotationPresent(Constants.REST_CONTROLLER)) {
 
                     RestControllerClasses javaClassObject = new RestControllerClasses();
 
@@ -62,6 +63,9 @@ public class Utils {
         } catch (FileNotFoundException e) {
             LOGGER.info("File not found: " + filePath);
             e.printStackTrace();
+        } catch (ParseProblemException e) {
+            LOGGER.info("Parsing failed for file: " + filePath);
+            e.printStackTrace();
         }
         return restControllerClasses;
     }
@@ -84,15 +88,15 @@ public class Utils {
         List<event> events = new ArrayList<>();
 
         event prerequest = new event();
-        prerequest.listen = "prerequest";
+        prerequest.listen = Constants.PREREQUEST;
         prerequest.script = new script();
-        prerequest.script.type = "text/javascript";
+        prerequest.script.type = Constants.TEXT_JAVASCRIPT;
         prerequest.script.exec = List.of("");
 
         event test = new event();
         test.listen = "test";
         test.script = new script();
-        test.script.type = "text/javascript";
+        test.script.type = Constants.TEXT_JAVASCRIPT;
         test.script.exec = List.of("");
 
         events.add(prerequest);
@@ -108,7 +112,7 @@ public class Utils {
         info._postman_id = UUID.randomUUID().toString();
         info._exporter_id = UUID.randomUUID().toString();
         info.name = collectionName.split("\\.")[0];
-        info.schema = "https://schema.getpostman.com/json/collection/v2.1.0/collection.json";
+        info.schema = Constants.POSTMAN_COLLECTION_SCHEMA;
 
         return info;
     }
@@ -123,7 +127,7 @@ public class Utils {
             item.event = setEvents();
             String baseUrl = "";
             for (AnnotationExpr annotation : restControllerClass.getAnnotations()) {
-                if("RequestMapping".equals(annotation.getNameAsString())) {
+                if(Constants.REQUEST_MAPPING.equals(annotation.getNameAsString())) {
                     baseUrl = processRequestAnnotation(annotation);
                 }
             }
@@ -158,11 +162,11 @@ public class Utils {
             if(CommonFactory.HTTP_METHOD_MAP.containsKey(annotation.getNameAsString())) {
                 request.method = CommonFactory.HTTP_METHOD_MAP.get(annotation.getNameAsString());
                 request.url = new url();
-                request.url.host = List.of("localhost:8080");
+                request.url.host = List.of(Constants.LOCALHOST_8080);
                 request.url.raw = baseUrl + processRequestAnnotation(annotation);
                 String[] paths = request.url.raw.split("/");
                 request.url.path = Arrays.asList(paths).subList(1, paths.length);
-                request.url.protocol = "http";
+                request.url.protocol = Constants.HTTP;
             }
         }
 
@@ -178,8 +182,8 @@ public class Utils {
                     map.put(annotationValue.split("=", 2)[0], annotationValue.split("=", 2)[1]);
                 }
             }
-            if(map.containsKey("value")) {
-                return map.get("value").replaceAll("\"", "");
+            if(map.containsKey(Constants.VALUE)) {
+                return map.get(Constants.VALUE).replaceAll("\"", "");
             } else if(map.size() == 0) {
                 return annotation.getChildNodes().get(1).toString().replaceAll("\"", "");
             }

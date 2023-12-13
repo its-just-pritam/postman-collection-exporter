@@ -11,6 +11,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.postman.collection.configuration.SaveAsDialogBox;
 import com.postman.collection.models.java.RestControllerClasses;
 import com.postman.collection.models.postman.PostmanCollection;
+import com.postman.collection.utils.Constants;
 import com.postman.collection.utils.Utils;
 
 import java.io.File;
@@ -45,8 +46,21 @@ public abstract class BasicActionHandler {
 
         String collectionName = savePath.b;
         String collectionPath = savePath.a;
-        PostmanCollection collection = utils.extractCollectionFromFiles(restControllerClasses, collectionName);
 
+        if(collectionName.endsWith(Constants.POSTMAN_COLLECTION_JSON)) {
+            exportPostmanCollection(e, project, restControllerClasses, collectionName, collectionPath);
+        } else if (Messages.showDialog(project,
+                "Invalid file postman collection name!", "Error",
+                "Mandatory format: <name>." + Constants.POSTMAN_COLLECTION_JSON,
+                List.of(Constants.OK, Constants.RETRY).toArray(new String[0]),
+                0, 0, AllIcons.General.ErrorDialog) == 1) {
+            handleAction(e);
+        }
+
+    }
+
+    private void exportPostmanCollection(AnActionEvent e, Project project, List<RestControllerClasses> restControllerClasses, String collectionName, String collectionPath) {
+        PostmanCollection collection = utils.extractCollectionFromFiles(restControllerClasses, collectionName);
         try {
             String fullExportPath = collectionPath.concat("\\").concat(collectionName);
             LOGGER.info("Exporting Postman collection: " + fullExportPath);
@@ -58,12 +72,11 @@ public abstract class BasicActionHandler {
             LOGGER.severe("Failed to export postman collection!");
             if(Messages.showDialog(
                     project, "Failed to export postman collection!", "Error",
-                    ex.getLocalizedMessage(), List.of("OK", "Retry").toArray(new String[0]),
+                    ex.getLocalizedMessage(), List.of(Constants.OK, Constants.RETRY).toArray(new String[0]),
                     0, 0, AllIcons.General.ErrorDialog) == 1) {
                 handleAction(e);
             }
         }
-
     }
 
     private void handleFiles(VirtualFile file, List<VirtualFile> validFiles) {
