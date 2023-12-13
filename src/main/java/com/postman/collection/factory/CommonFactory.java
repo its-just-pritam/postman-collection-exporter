@@ -14,7 +14,7 @@ import java.util.function.Predicate;
 
 public class CommonFactory {
 
-    public static final Map<Predicate<String>, Function<Project, BasicActionHandler>> ACTION_FACTORY_MAP = new LinkedHashMap<>();
+    public static final Map<Predicate<String>, Function<AnActionEvent, BasicActionHandler>> ACTION_FACTORY_MAP = new LinkedHashMap<>();
     public static final Map<String, String> HTTP_METHOD_MAP = new LinkedHashMap<>();
 
     static {

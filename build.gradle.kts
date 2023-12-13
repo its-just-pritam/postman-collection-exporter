@@ -12,7 +12,7 @@ repositories {
 dependencies {
     implementation("foundation.icon:icon-sdk:2.5.0")
     implementation("com.github.javaparser:javaparser-symbol-solver-core:3.25.7")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.2.1")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.1")
 }
 
 // Configure Gradle IntelliJ Plugin
