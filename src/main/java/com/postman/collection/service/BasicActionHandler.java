@@ -51,7 +51,7 @@ public abstract class BasicActionHandler {
             exportPostmanCollection(e, project, restControllerClasses, collectionName, collectionPath);
         } else if (Messages.showDialog(project,
                 "Invalid file postman collection name!", "Error",
-                "Mandatory format: <name>." + Constants.POSTMAN_COLLECTION_JSON,
+                "Mandatory format: <name>" + Constants.POSTMAN_COLLECTION_JSON,
                 List.of(Constants.OK, Constants.RETRY).toArray(new String[0]),
                 0, 0, AllIcons.General.ErrorDialog) == 1) {
             handleAction(e);

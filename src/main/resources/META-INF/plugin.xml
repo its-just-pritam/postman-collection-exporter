@@ -8,7 +8,7 @@
     <name>Postman-Collection-Exporter</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="pritam.mallick@honeywell.com" url="https://www.honeywell.com">Honeywell</vendor>
+    <vendor email="sritam.mallick@gmail.com" url="">Towlschii</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
@@ -16,6 +16,33 @@
     <description><![CDATA[
         Export postman collection containing REST API
         requests for your Spring Boot application.<br>
+        <ol>
+            <li>Export using Tools Menu Popup:</li>
+            <ul>
+                <li>Open Tools menu -> Postman Collection.</li>
+                <li>Select the module(s) or file(s) containing Controller classes.</li>
+                <li>Enter the file name and export path.</li>
+                <li>Select OK.</li>
+            </ul>
+            <br>
+            <li>Export using Project View Popup:</li>
+            <ul>
+                <li>Go to the Project View.</li>
+                <li>Select the module(s) or file(s) containing Controller classes.</li>
+                <li>Right Click -> Postman Collection.</li>
+                <li>Enter the file name and export path.</li>
+                <li>Select OK.</li>
+            </ul>
+            <br>
+            <li>Export using Editor Popup:</li>
+            <ul>
+                <li>Open the file containing Controller class.</li>
+                <li>Right Click -> Postman Collection.</li>
+                <li>Enter the file name and export path.</li>
+                <li>Select OK.</li>
+            </ul>
+        </ol>
+    <br>
     ]]></description>
 
     <!-- Product and plugin compatibility requirements.

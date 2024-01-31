@@ -182,11 +182,21 @@ public class Utils {
                     map.put(annotationValue.split("=", 2)[0], annotationValue.split("=", 2)[1]);
                 }
             }
+            // Add an if case for a property in map containing type
+
+
+
             if(map.containsKey(Constants.VALUE)) {
                 return map.get(Constants.VALUE).replaceAll("\"", "");
             } else if(map.size() == 0) {
                 return annotation.getChildNodes().get(1).toString().replaceAll("\"", "");
+            } else if(map.containsKey("type")) {
+                return map.get("type").replaceAll("\"", "");
+            } else {
+                return "";
             }
+
+
         }
         return "";
     }
