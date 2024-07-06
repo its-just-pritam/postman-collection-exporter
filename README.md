@@ -16,6 +16,8 @@ This repository contains the source code for a custom IntelliJ IDEA plugin desig
     - Select `Navigate` > `Search Everywhere` > type and select `Plugins`.
     - Navigate to the settings > select `Install Plugin from Disk...` > Import the .zip file.
 
+      <img src="src/main/resources/META-INF/plugin-installed.png" alt="Plugin Installed">
+
 ## Features
 
 1. **Export using Tools Menu Popup:**
